@@ -10,6 +10,8 @@
 		111111111111111111111101 /* StatsLiteApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111201 /* StatsLiteApp.swift */; };
 		111111111111111111111102 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111202 /* AppDelegate.swift */; };
 		111111111111111111111103 /* StatsFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111203 /* StatsFormatterTests.swift */; };
+		111111111111111111111104 /* StatsSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111207 /* StatsSnapshot.swift */; };
+		111111111111111111111105 /* StatsFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111208 /* StatsFormatter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +31,8 @@
 		111111111111111111111204 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		111111111111111111111205 /* StatsLite.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StatsLite.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		111111111111111111111206 /* StatsLiteTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StatsLiteTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		111111111111111111111207 /* StatsSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsSnapshot.swift; sourceTree = "<group>"; };
+		111111111111111111111208 /* StatsFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsFormatter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +67,8 @@
 			children = (
 				111111111111111111111201 /* StatsLiteApp.swift */,
 				111111111111111111111202 /* AppDelegate.swift */,
+				111111111111111111111207 /* StatsSnapshot.swift */,
+				111111111111111111111208 /* StatsFormatter.swift */,
 				111111111111111111111204 /* Info.plist */,
 			);
 			path = StatsLite;
@@ -166,6 +172,8 @@
 			files = (
 				111111111111111111111101 /* StatsLiteApp.swift in Sources */,
 				111111111111111111111102 /* AppDelegate.swift in Sources */,
+				111111111111111111111104 /* StatsSnapshot.swift in Sources */,
+				111111111111111111111105 /* StatsFormatter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
