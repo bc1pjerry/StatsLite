@@ -15,6 +15,7 @@
 		111111111111111111111106 /* SemiCircleProgressViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111209 /* SemiCircleProgressViewModelTests.swift */; };
 		111111111111111111111107 /* SemiCircleProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111210 /* SemiCircleProgressView.swift */; };
 		111111111111111111111108 /* SystemStatsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111211 /* SystemStatsProvider.swift */; };
+		111111111111111111111109 /* MenuBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111212 /* MenuBarController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +40,7 @@
 		111111111111111111111209 /* SemiCircleProgressViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemiCircleProgressViewModelTests.swift; sourceTree = "<group>"; };
 		111111111111111111111210 /* SemiCircleProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemiCircleProgressView.swift; sourceTree = "<group>"; };
 		111111111111111111111211 /* SystemStatsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemStatsProvider.swift; sourceTree = "<group>"; };
+		111111111111111111111212 /* MenuBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 				111111111111111111111208 /* StatsFormatter.swift */,
 				111111111111111111111210 /* SemiCircleProgressView.swift */,
 				111111111111111111111211 /* SystemStatsProvider.swift */,
+				111111111111111111111212 /* MenuBarController.swift */,
 				111111111111111111111204 /* Info.plist */,
 			);
 			path = StatsLite;
@@ -185,6 +188,7 @@
 				111111111111111111111105 /* StatsFormatter.swift in Sources */,
 				111111111111111111111107 /* SemiCircleProgressView.swift in Sources */,
 				111111111111111111111108 /* SystemStatsProvider.swift in Sources */,
+				111111111111111111111109 /* MenuBarController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
