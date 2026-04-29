@@ -1,0 +1,7 @@
+.DS_Store
+.superpowers/
+.trae/*
+!.trae/rules/
+!.trae/rules/**
+DerivedData/
+*.xcuserdata/
