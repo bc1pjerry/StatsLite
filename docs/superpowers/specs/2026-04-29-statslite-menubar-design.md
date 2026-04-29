@@ -1,124 +1,124 @@
-# StatsLite Menu Bar App Design
+# StatsLite 菜单栏应用设计
 
-Date: 2026-04-29
+日期：2026-04-29
 
-## Goal
+## 目标
 
-Create a native macOS menu bar app named StatsLite. The app reads local CPU, GPU, and memory information and presents the current load in the macOS menu bar.
+创建一个名为 StatsLite 的原生 macOS 菜单栏应用。应用会读取本机 CPU、GPU 和内存信息，并把当前主要负载以半圆形进度条的形式显示在 macOS 菜单栏中。
 
-## Project Form
+## 工程形态
 
-StatsLite will be a full Xcode macOS project using Swift, SwiftUI, and AppKit. It will create `StatsLite.xcodeproj` and native source/test targets.
+StatsLite 使用完整 Xcode macOS 工程形态，技术栈为 Swift、SwiftUI 和 AppKit。工程会包含 `StatsLite.xcodeproj`，以及原生 App target 和测试 target。
 
-The app will run as a menu bar utility rather than a normal windowed app:
+应用作为菜单栏工具运行，而不是普通窗口应用：
 
-- No main window at launch.
-- No Dock icon.
-- One `NSStatusItem` in the system menu bar.
-- A menu attached to the status item with detailed CPU, GPU, and memory information plus Quit.
+- 启动时不显示主窗口。
+- 不显示 Dock 图标。
+- 在系统菜单栏中创建一个 `NSStatusItem`。
+- 点击菜单栏项目后，显示包含 CPU、GPU、内存详情和退出按钮的菜单。
 
-## Menu Bar Presentation
+## 菜单栏展示
 
-The menu bar item will use option B from the visual mockup: a balanced semi-circular progress indicator with an integer value centered inside it.
+菜单栏项目采用视觉方案 B：平衡尺寸的半圆形进度条，中间显示一个整数。
 
-Default dimensions:
+默认尺寸和样式：
 
-- Approximate status item content size: 42 px wide by 26 px high.
-- Semi-circle track with rounded caps.
-- Filled arc color: muted green.
-- Background track: macOS system gray.
-- Center text: integer only, no percent sign.
-- Font: compact system font, bold enough to remain readable in the menu bar.
+- 状态栏内容区域约为 42 px 宽、26 px 高。
+- 半圆轨道使用圆角端点。
+- 进度弧使用低饱和绿色。
+- 背景轨道使用 macOS 系统灰。
+- 中间文本只显示整数，不显示百分号。
+- 字体使用紧凑系统字体，并保持足够字重，保证菜单栏内可读。
 
-The displayed integer will represent the primary load value. For the first version, this will be CPU usage rounded to the nearest whole number. Detailed CPU, GPU, and memory values will be available in the dropdown menu.
+显示的整数代表主要负载值。第一版中，该值使用 CPU 使用率，并四舍五入为整数。CPU、GPU 和内存的详细信息放在下拉菜单中。
 
-## Dropdown Menu
+## 下拉菜单
 
-Clicking the status item opens a simple native menu:
+点击菜单栏项目后打开原生菜单，内容包括：
 
-- CPU usage as an integer percentage.
-- GPU device name.
-- Memory used and total memory.
-- Refresh interval.
-- Quit command.
+- CPU 使用率，显示为整数百分比。
+- GPU 设备名称。
+- 已用内存和总内存。
+- 刷新间隔。
+- 退出应用。
 
-The menu will update from the same cached stats snapshot used by the menu bar indicator.
+菜单内容和菜单栏进度条使用同一份缓存的系统状态快照，并随刷新定时器更新。
 
-## System Stats Collection
+## 系统信息采集
 
-CPU usage:
+CPU 使用率：
 
-- Use `host_processor_info` to read per-core CPU ticks.
-- Calculate usage from the delta between consecutive samples.
-- Clamp the result to 0...100 before formatting.
+- 使用 `host_processor_info` 读取每个核心的 CPU tick。
+- 根据连续两次采样之间的差值计算使用率。
+- 格式化前将结果限制在 0...100 范围内。
 
-Memory:
+内存信息：
 
-- Use `host_statistics64` for VM statistics.
-- Use `sysctl` to read total physical memory.
-- Report used and total memory in GB.
+- 使用 `host_statistics64` 读取虚拟内存统计。
+- 使用 `sysctl` 读取物理内存总量。
+- 以 GB 为单位展示已用内存和总内存。
 
-GPU:
+GPU 信息：
 
-- Use Metal to get the default device name.
-- If Metal is unavailable, show `Unavailable`.
+- 使用 Metal 获取默认 GPU 设备名称。
+- 如果 Metal 不可用，则显示 `Unavailable`。
 
-## Main Components
+## 主要组件
 
 `StatsLiteApp.swift`
 
-- App entry point.
-- Configures the app as menu-bar-only.
-- Owns the app delegate or startup bridge needed for AppKit status item setup.
+- 应用入口。
+- 将应用配置为菜单栏工具。
+- 持有 AppKit 状态栏启动所需的 app delegate 或桥接对象。
 
 `MenuBarController.swift`
 
-- Owns `NSStatusItem`.
-- Hosts the custom semi-circle progress view in the status item.
-- Builds and refreshes the dropdown menu.
-- Runs the refresh timer.
+- 持有 `NSStatusItem`。
+- 在菜单栏项目中承载自定义半圆进度视图。
+- 构建并刷新下拉菜单。
+- 管理刷新定时器。
 
 `SemiCircleProgressView.swift`
 
-- Draws the balanced semi-circle progress indicator.
-- Displays only the integer value in the center.
-- Handles clamping and stable intrinsic sizing for menu bar use.
+- 绘制平衡尺寸的半圆形进度条。
+- 在中心只显示整数。
+- 负责进度限制和稳定的菜单栏内在尺寸。
 
 `SystemStatsProvider.swift`
 
-- Reads CPU, GPU, and memory data.
-- Keeps CPU previous-sample state so usage is calculated from deltas.
-- Returns a typed stats snapshot.
+- 读取 CPU、GPU 和内存数据。
+- 保存 CPU 上一次采样状态，用于根据差值计算使用率。
+- 返回结构化的系统状态快照。
 
 `StatsFormatter.swift`
 
-- Formats integers and memory strings.
-- Keeps presentation rules testable without depending on macOS system APIs.
+- 格式化整数和内存字符串。
+- 将展示规则保持为可测试逻辑，避免测试直接依赖 macOS 系统 API。
 
-## Testing
+## 测试
 
-Use focused unit tests for deterministic behavior:
+使用聚焦的单元测试覆盖确定性逻辑：
 
-- Integer formatting rounds and clamps values correctly.
-- Memory formatting produces stable GB strings.
-- Semi-circle view model clamps progress to 0...1.
-- Menu bar primary value uses CPU usage as the displayed integer.
+- 整数格式化会正确四舍五入并限制范围。
+- 内存格式化会生成稳定的 GB 字符串。
+- 半圆进度视图模型会把进度限制在 0...1 范围内。
+- 菜单栏主显示值使用 CPU 使用率整数。
 
-System API collection will be validated by build and runtime smoke testing because exact values depend on local hardware and current load.
+系统 API 采集逻辑依赖本机硬件和当前负载，第一版主要通过构建验证和运行时冒烟测试确认。
 
-## Validation
+## 验证
 
-After implementation:
+实现完成后：
 
-- Build with `xcodebuild`.
-- Run unit tests with `xcodebuild test` if a suitable macOS test destination is available.
-- Confirm the project opens in Xcode.
-- Confirm the app target is a menu bar app with no normal launch window.
+- 使用 `xcodebuild` 构建工程。
+- 如果本机存在合适的 macOS 测试目标，则使用 `xcodebuild test` 运行测试。
+- 确认工程可以在 Xcode 中打开。
+- 确认 App target 作为菜单栏应用运行，启动时没有普通主窗口。
 
-## Out Of Scope For First Version
+## 第一版不包含
 
-- User-selectable primary metric.
-- Historical charts.
-- Preferences window.
-- Login item installation.
-- Multiple simultaneous menu bar gauges.
+- 用户选择菜单栏主指标。
+- 历史曲线。
+- 设置窗口。
+- 登录时自动启动。
+- 多个菜单栏仪表同时显示。
