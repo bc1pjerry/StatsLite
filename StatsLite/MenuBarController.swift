@@ -1,6 +1,16 @@
 import AppKit
 import SwiftUI
 
+enum MenuBarItemLayout {
+    static let statusItemLength: CGFloat = 32
+    static let contentFrame = NSRect(
+        x: 2,
+        y: 1,
+        width: SemiCircleProgressLayout.viewSize.width,
+        height: SemiCircleProgressLayout.viewSize.height
+    )
+}
+
 @MainActor
 final class MenuBarController {
     private let statusItem: NSStatusItem
@@ -20,7 +30,7 @@ final class MenuBarController {
     }
 
     private func configureStatusItem() {
-        statusItem.length = 46
+        statusItem.length = MenuBarItemLayout.statusItemLength
         statusItem.menu = makeMenu()
     }
 
@@ -49,7 +59,7 @@ final class MenuBarController {
         }
 
         let hostingView = NSHostingView(rootView: view)
-        hostingView.frame = NSRect(x: 2, y: 0, width: 42, height: 26)
+        hostingView.frame = MenuBarItemLayout.contentFrame
         hostingView.autoresizingMask = [.minXMargin, .maxXMargin, .minYMargin, .maxYMargin]
         self.hostingView = hostingView
 

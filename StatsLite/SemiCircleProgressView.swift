@@ -1,5 +1,14 @@
 import SwiftUI
 
+enum SemiCircleProgressLayout {
+    static let viewSize = CGSize(width: 28, height: 20)
+    static let strokeWidth: CGFloat = 3
+    static let textSize: CGFloat = 6
+    static let textYOffset: CGFloat = 3
+    static let radiusHorizontalInset: CGFloat = 5
+    static let radiusBottomInset: CGFloat = 5
+}
+
 struct SemiCircleProgressViewModel: Equatable {
     let displayValue: Int
     let progress: Double
@@ -21,17 +30,17 @@ struct SemiCircleProgressView: View {
     var body: some View {
         ZStack {
             SemiCircleShape(progress: 1)
-                .stroke(Color(nsColor: .systemGray), style: StrokeStyle(lineWidth: 4, lineCap: .round))
+                .stroke(Color(nsColor: .systemGray), style: StrokeStyle(lineWidth: SemiCircleProgressLayout.strokeWidth, lineCap: .round))
 
             SemiCircleShape(progress: model.progress)
-                .stroke(Color(red: 0.12, green: 0.54, blue: 0.44), style: StrokeStyle(lineWidth: 4, lineCap: .round))
+                .stroke(Color(red: 0.12, green: 0.54, blue: 0.44), style: StrokeStyle(lineWidth: SemiCircleProgressLayout.strokeWidth, lineCap: .round))
 
             Text("\(model.displayValue)")
-                .font(.system(size: 12, weight: .bold, design: .rounded))
+                .font(.system(size: SemiCircleProgressLayout.textSize, weight: .bold, design: .rounded))
                 .foregroundStyle(.primary)
-                .offset(y: 5)
+                .offset(y: SemiCircleProgressLayout.textYOffset)
         }
-        .frame(width: 42, height: 26)
+        .frame(width: SemiCircleProgressLayout.viewSize.width, height: SemiCircleProgressLayout.viewSize.height)
         .accessibilityLabel("CPU \(model.displayValue) percent")
     }
 }
@@ -41,8 +50,8 @@ private struct SemiCircleShape: Shape {
 
     func path(in rect: CGRect) -> Path {
         let clampedProgress = min(max(progress, 0), 1)
-        let radius = min(rect.width / 2 - 7, rect.height - 6)
-        let center = CGPoint(x: rect.midX, y: rect.maxY - 6)
+        let radius = min(rect.width / 2 - SemiCircleProgressLayout.radiusHorizontalInset, rect.height - SemiCircleProgressLayout.radiusBottomInset)
+        let center = CGPoint(x: rect.midX, y: rect.maxY - SemiCircleProgressLayout.radiusBottomInset)
         let startAngle = Angle.degrees(180)
         let endAngle = Angle.degrees(180 + 180 * clampedProgress)
 
