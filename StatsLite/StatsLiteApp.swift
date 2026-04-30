@@ -6,7 +6,7 @@ struct StatsLiteApp: App {
 
     var body: some Scene {
         Settings {
-            EmptyView()
+            SettingsView(settings: appDelegate.settings, statsState: appDelegate.statsState)
         }
     }
 }

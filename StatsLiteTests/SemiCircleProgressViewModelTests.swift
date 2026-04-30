@@ -24,4 +24,19 @@ final class SemiCircleProgressViewModelTests: XCTestCase {
         XCTAssertEqual(frame.size.width, MenuBarItemLayout.contentSize.width)
         XCTAssertEqual(frame.size.height, SemiCircleProgressLayout.viewSize.height)
     }
+
+    func testMenuBarLayoutUsesSelectedMetricCount() {
+        XCTAssertEqual(MenuBarItemLayout.metricCount(for: .cpuAndMemory), 2)
+        XCTAssertEqual(MenuBarItemLayout.metricCount(for: .cpuOnly), 1)
+        XCTAssertEqual(MenuBarItemLayout.metricCount(for: .memoryOnly), 1)
+
+        XCTAssertEqual(
+            MenuBarItemLayout.contentSize(for: .cpuOnly).width,
+            SemiCircleProgressLayout.viewSize.width
+        )
+        XCTAssertEqual(
+            MenuBarItemLayout.contentSize(for: .cpuAndMemory).width,
+            SemiCircleProgressLayout.viewSize.width * 2 + MenuBarItemLayout.itemSpacing
+        )
+    }
 }

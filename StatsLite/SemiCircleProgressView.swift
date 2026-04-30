@@ -22,10 +22,12 @@ struct SemiCircleProgressViewModel: Equatable {
 
 struct SemiCircleProgressView: View {
     let model: SemiCircleProgressViewModel
+    private let accentColor: Color
     private let accessibilityName: String
 
-    init(value: Int, accessibilityName: String = "CPU") {
+    init(value: Int, accentColor: Color = Color(red: 0.12, green: 0.54, blue: 0.44), accessibilityName: String = "CPU") {
         self.model = SemiCircleProgressViewModel(rawValue: value)
+        self.accentColor = accentColor
         self.accessibilityName = accessibilityName
     }
 
@@ -35,7 +37,7 @@ struct SemiCircleProgressView: View {
                 .stroke(Color(nsColor: .systemGray), style: StrokeStyle(lineWidth: SemiCircleProgressLayout.strokeWidth, lineCap: .round))
 
             SemiCircleShape(progress: model.progress)
-                .stroke(Color(red: 0.12, green: 0.54, blue: 0.44), style: StrokeStyle(lineWidth: SemiCircleProgressLayout.strokeWidth, lineCap: .round))
+                .stroke(accentColor, style: StrokeStyle(lineWidth: SemiCircleProgressLayout.strokeWidth, lineCap: .round))
 
             Text("\(model.displayValue)")
                 .font(.system(size: SemiCircleProgressLayout.textSize, weight: .bold, design: .rounded))
@@ -50,13 +52,20 @@ struct SemiCircleProgressView: View {
 struct MenuBarStatsView: View {
     let cpuValue: Int
     let memoryValue: Int
+    let metricLayout: MetricLayout
+    let accentColor: Color
 
     var body: some View {
         HStack(spacing: MenuBarItemLayout.itemSpacing) {
-            SemiCircleProgressView(value: cpuValue, accessibilityName: "CPU")
-            SemiCircleProgressView(value: memoryValue, accessibilityName: "Memory")
+            if metricLayout != .memoryOnly {
+                SemiCircleProgressView(value: cpuValue, accentColor: accentColor, accessibilityName: "CPU")
+            }
+
+            if metricLayout != .cpuOnly {
+                SemiCircleProgressView(value: memoryValue, accentColor: accentColor, accessibilityName: "Memory")
+            }
         }
-        .frame(width: MenuBarItemLayout.contentSize.width, height: MenuBarItemLayout.contentSize.height)
+        .frame(width: MenuBarItemLayout.contentSize(for: metricLayout).width, height: MenuBarItemLayout.contentSize(for: metricLayout).height)
     }
 }
 

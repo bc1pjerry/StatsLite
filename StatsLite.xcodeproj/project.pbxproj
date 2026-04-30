@@ -16,6 +16,10 @@
 		111111111111111111111107 /* SemiCircleProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111210 /* SemiCircleProgressView.swift */; };
 		111111111111111111111108 /* SystemStatsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111211 /* SystemStatsProvider.swift */; };
 		111111111111111111111109 /* MenuBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111212 /* MenuBarController.swift */; };
+		111111111111111111111110 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111213 /* AppSettings.swift */; };
+		111111111111111111111111 /* AppSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111214 /* AppSettingsTests.swift */; };
+		111111111111111111111112 /* StatsState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111215 /* StatsState.swift */; };
+		111111111111111111111113 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111216 /* SettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +45,10 @@
 		111111111111111111111210 /* SemiCircleProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemiCircleProgressView.swift; sourceTree = "<group>"; };
 		111111111111111111111211 /* SystemStatsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemStatsProvider.swift; sourceTree = "<group>"; };
 		111111111111111111111212 /* MenuBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarController.swift; sourceTree = "<group>"; };
+		111111111111111111111213 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
+		111111111111111111111214 /* AppSettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsTests.swift; sourceTree = "<group>"; };
+		111111111111111111111215 /* StatsState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsState.swift; sourceTree = "<group>"; };
+		111111111111111111111216 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +85,9 @@
 				111111111111111111111202 /* AppDelegate.swift */,
 				111111111111111111111207 /* StatsSnapshot.swift */,
 				111111111111111111111208 /* StatsFormatter.swift */,
+				111111111111111111111213 /* AppSettings.swift */,
+				111111111111111111111215 /* StatsState.swift */,
+				111111111111111111111216 /* SettingsView.swift */,
 				111111111111111111111210 /* SemiCircleProgressView.swift */,
 				111111111111111111111211 /* SystemStatsProvider.swift */,
 				111111111111111111111212 /* MenuBarController.swift */,
@@ -90,6 +101,7 @@
 			children = (
 				111111111111111111111203 /* StatsFormatterTests.swift */,
 				111111111111111111111209 /* SemiCircleProgressViewModelTests.swift */,
+				111111111111111111111214 /* AppSettingsTests.swift */,
 			);
 			path = StatsLiteTests;
 			sourceTree = "<group>";
@@ -189,6 +201,9 @@
 				111111111111111111111107 /* SemiCircleProgressView.swift in Sources */,
 				111111111111111111111108 /* SystemStatsProvider.swift in Sources */,
 				111111111111111111111109 /* MenuBarController.swift in Sources */,
+				111111111111111111111110 /* AppSettings.swift in Sources */,
+				111111111111111111111112 /* StatsState.swift in Sources */,
+				111111111111111111111113 /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -198,6 +213,7 @@
 			files = (
 				111111111111111111111103 /* StatsFormatterTests.swift in Sources */,
 				111111111111111111111106 /* SemiCircleProgressViewModelTests.swift in Sources */,
+				111111111111111111111111 /* AppSettingsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

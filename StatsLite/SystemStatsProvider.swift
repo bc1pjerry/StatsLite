@@ -17,13 +17,13 @@ final class SystemStatsProvider {
         deallocateCPUInfo(previousCPUInfo, count: previousCPUInfoCount)
     }
 
-    func snapshot() -> StatsSnapshot {
+    func snapshot(refreshIntervalSeconds: Int? = nil) -> StatsSnapshot {
         StatsSnapshot(
             cpuUsagePercent: cpuUsagePercent(),
             gpuName: gpuName,
             usedMemoryBytes: usedMemoryBytes(),
             totalMemoryBytes: totalMemoryBytes(),
-            refreshIntervalSeconds: refreshIntervalSeconds
+            refreshIntervalSeconds: refreshIntervalSeconds ?? self.refreshIntervalSeconds
         )
     }
 
