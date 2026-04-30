@@ -12,16 +12,16 @@ final class SemiCircleProgressViewModelTests: XCTestCase {
         XCTAssertEqual(SemiCircleProgressViewModel(rawValue: 150).progress, 1)
     }
 
-    func testMenuBarLayoutKeepsCompactViewWithPadding() {
-        XCTAssertEqual(SemiCircleProgressLayout.viewSize.width, 28)
-        XCTAssertEqual(SemiCircleProgressLayout.viewSize.height, 20)
-        XCTAssertEqual(SemiCircleProgressLayout.strokeWidth, 3)
-        XCTAssertEqual(SemiCircleProgressLayout.textSize, 6)
+    func testMenuBarLayoutCentersTwoCompactViewsWithOnePointHorizontalPadding() {
+        let container = CGRect(x: 0, y: 0, width: 78, height: 26)
+        let frame = MenuBarItemLayout.contentFrame(in: container)
 
-        XCTAssertEqual(MenuBarItemLayout.statusItemLength, 32)
-        XCTAssertEqual(MenuBarItemLayout.contentFrame.origin.x, 2)
-        XCTAssertEqual(MenuBarItemLayout.contentFrame.origin.y, 1)
-        XCTAssertEqual(MenuBarItemLayout.contentFrame.size.width, SemiCircleProgressLayout.viewSize.width)
-        XCTAssertEqual(MenuBarItemLayout.contentFrame.size.height, SemiCircleProgressLayout.viewSize.height)
+        XCTAssertEqual(MenuBarItemLayout.horizontalPadding, 1)
+        XCTAssertEqual(MenuBarItemLayout.itemSpacing, 4)
+        XCTAssertEqual(MenuBarItemLayout.statusItemLength, SemiCircleProgressLayout.viewSize.width * 2 + MenuBarItemLayout.itemSpacing + 2)
+        XCTAssertEqual(frame.origin.x, (container.width - MenuBarItemLayout.contentSize.width) / 2)
+        XCTAssertEqual(frame.origin.y, (container.height - SemiCircleProgressLayout.viewSize.height) / 2)
+        XCTAssertEqual(frame.size.width, MenuBarItemLayout.contentSize.width)
+        XCTAssertEqual(frame.size.height, SemiCircleProgressLayout.viewSize.height)
     }
 }

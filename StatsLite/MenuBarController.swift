@@ -2,13 +2,28 @@ import AppKit
 import SwiftUI
 
 enum MenuBarItemLayout {
-    static let statusItemLength: CGFloat = 32
-    static let contentFrame = NSRect(
-        x: 2,
-        y: 1,
-        width: SemiCircleProgressLayout.viewSize.width,
-        height: SemiCircleProgressLayout.viewSize.height
-    )
+    static let horizontalPadding: CGFloat = 1
+    static let itemSpacing: CGFloat = 4
+
+    static var contentSize: CGSize {
+        CGSize(
+            width: SemiCircleProgressLayout.viewSize.width * 2 + itemSpacing,
+            height: SemiCircleProgressLayout.viewSize.height
+        )
+    }
+
+    static var statusItemLength: CGFloat {
+        contentSize.width + horizontalPadding * 2
+    }
+
+    static func contentFrame(in containerBounds: CGRect) -> NSRect {
+        return NSRect(
+            x: (containerBounds.width - contentSize.width) / 2,
+            y: (containerBounds.height - contentSize.height) / 2,
+            width: contentSize.width,
+            height: contentSize.height
+        )
+    }
 }
 
 @MainActor
@@ -17,7 +32,7 @@ final class MenuBarController {
     private let provider: SystemStatsProvider
     private var timer: Timer?
     private var latestSnapshot: StatsSnapshot
-    private var hostingView: NSHostingView<SemiCircleProgressView>?
+    private var hostingView: NSHostingView<MenuBarStatsView>?
 
     init(provider: SystemStatsProvider = SystemStatsProvider()) {
         self.provider = provider
@@ -44,27 +59,38 @@ final class MenuBarController {
 
     private func refresh() {
         latestSnapshot = provider.snapshot()
-        let value = StatsFormatter.primaryInteger(cpuUsage: latestSnapshot.cpuUsagePercent)
-        updateStatusButton(value: value)
-        statusItem.button?.toolTip = StatsFormatter.cpuMenuTitle(latestSnapshot)
+        let cpuValue = StatsFormatter.primaryInteger(cpuUsage: latestSnapshot.cpuUsagePercent)
+        let memoryValue = StatsFormatter.memoryUsageInteger(
+            usedBytes: latestSnapshot.usedMemoryBytes,
+            totalBytes: latestSnapshot.totalMemoryBytes
+        )
+        updateStatusButton(cpuValue: cpuValue, memoryValue: memoryValue)
+        statusItem.button?.toolTip = "\(StatsFormatter.cpuMenuTitle(latestSnapshot)) | Memory: \(memoryValue)%"
         statusItem.menu = makeMenu()
     }
 
-    private func updateStatusButton(value: Int) {
-        let view = SemiCircleProgressView(value: value)
+    private func updateStatusButton(cpuValue: Int, memoryValue: Int) {
+        let view = MenuBarStatsView(cpuValue: cpuValue, memoryValue: memoryValue)
 
         if let hostingView {
             hostingView.rootView = view
+            if let button = statusItem.button {
+                hostingView.frame = MenuBarItemLayout.contentFrame(in: button.bounds)
+            }
+            return
+        }
+
+        guard let button = statusItem.button else {
             return
         }
 
         let hostingView = NSHostingView(rootView: view)
-        hostingView.frame = MenuBarItemLayout.contentFrame
+        hostingView.frame = MenuBarItemLayout.contentFrame(in: button.bounds)
         hostingView.autoresizingMask = [.minXMargin, .maxXMargin, .minYMargin, .maxYMargin]
         self.hostingView = hostingView
 
-        statusItem.button?.subviews.forEach { $0.removeFromSuperview() }
-        statusItem.button?.addSubview(hostingView)
+        button.subviews.forEach { $0.removeFromSuperview() }
+        button.addSubview(hostingView)
     }
 
     private func makeMenu() -> NSMenu {

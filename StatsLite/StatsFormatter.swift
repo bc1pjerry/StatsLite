@@ -5,6 +5,15 @@ enum StatsFormatter {
         Int(cpuUsage.rounded()).clamped(to: 0...100)
     }
 
+    static func memoryUsageInteger(usedBytes: UInt64, totalBytes: UInt64) -> Int {
+        guard totalBytes > 0 else {
+            return 0
+        }
+
+        let percent = Double(usedBytes) / Double(totalBytes) * 100
+        return Int(percent.rounded()).clamped(to: 0...100)
+    }
+
     static func progressFraction(percent: Int) -> Double {
         Double(percent).clamped(to: 0...100) / 100
     }

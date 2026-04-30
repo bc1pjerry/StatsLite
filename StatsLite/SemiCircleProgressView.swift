@@ -1,9 +1,9 @@
 import SwiftUI
 
 enum SemiCircleProgressLayout {
-    static let viewSize = CGSize(width: 28, height: 20)
+    static let viewSize = CGSize(width: 30, height: 20)
     static let strokeWidth: CGFloat = 3
-    static let textSize: CGFloat = 6
+    static let textSize: CGFloat = 8
     static let textYOffset: CGFloat = 3
     static let radiusHorizontalInset: CGFloat = 5
     static let radiusBottomInset: CGFloat = 5
@@ -22,9 +22,11 @@ struct SemiCircleProgressViewModel: Equatable {
 
 struct SemiCircleProgressView: View {
     let model: SemiCircleProgressViewModel
+    private let accessibilityName: String
 
-    init(value: Int) {
+    init(value: Int, accessibilityName: String = "CPU") {
         self.model = SemiCircleProgressViewModel(rawValue: value)
+        self.accessibilityName = accessibilityName
     }
 
     var body: some View {
@@ -41,7 +43,20 @@ struct SemiCircleProgressView: View {
                 .offset(y: SemiCircleProgressLayout.textYOffset)
         }
         .frame(width: SemiCircleProgressLayout.viewSize.width, height: SemiCircleProgressLayout.viewSize.height)
-        .accessibilityLabel("CPU \(model.displayValue) percent")
+        .accessibilityLabel("\(accessibilityName) \(model.displayValue) percent")
+    }
+}
+
+struct MenuBarStatsView: View {
+    let cpuValue: Int
+    let memoryValue: Int
+
+    var body: some View {
+        HStack(spacing: MenuBarItemLayout.itemSpacing) {
+            SemiCircleProgressView(value: cpuValue, accessibilityName: "CPU")
+            SemiCircleProgressView(value: memoryValue, accessibilityName: "Memory")
+        }
+        .frame(width: MenuBarItemLayout.contentSize.width, height: MenuBarItemLayout.contentSize.height)
     }
 }
 

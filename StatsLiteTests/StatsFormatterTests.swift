@@ -20,6 +20,14 @@ final class StatsFormatterTests: XCTestCase {
         XCTAssertEqual(text, "Memory: 8.0 GB / 16.0 GB")
     }
 
+    func testMemoryUsageIntegerRoundsAndClampsPercentage() {
+        XCTAssertEqual(StatsFormatter.memoryUsageInteger(usedBytes: 0, totalBytes: 0), 0)
+        XCTAssertEqual(StatsFormatter.memoryUsageInteger(usedBytes: 1, totalBytes: 0), 0)
+        XCTAssertEqual(StatsFormatter.memoryUsageInteger(usedBytes: 4_294_967_296, totalBytes: 17_179_869_184), 25)
+        XCTAssertEqual(StatsFormatter.memoryUsageInteger(usedBytes: 8_675_833_938, totalBytes: 17_179_869_184), 51)
+        XCTAssertEqual(StatsFormatter.memoryUsageInteger(usedBytes: 20_000_000_000, totalBytes: 10_000_000_000), 100)
+    }
+
     func testMenuLinesUseSnapshotValues() {
         let snapshot = StatsSnapshot(
             cpuUsagePercent: 67.2,
